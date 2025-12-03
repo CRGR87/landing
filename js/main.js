@@ -1,6 +1,9 @@
 import { loadConfig } from "./config.js";
 
-// Variables globales para almacenar la configuraciÃ³n cargada
+// URL del Webhook de n8n (Producción)
+const N8N_WEBHOOK_URL = "https://cristofergr.app.n8n.cloud/webhook/simple-website";
+
+// Variables globales para almacenar la configuración cargada
 let currentConfig = {};
 
 // Elementos del DOM
@@ -18,7 +21,7 @@ const elements = {
 /**
  * Inicializa la landing:
  * 1) Carga config (Google Sheets o fallback)
- * 2) Pinta los textos dinÃ¡micos
+ * 2) Pinta los textos dinámicamente
  * 3) Configura modal y formulario
  */
 async function initLanding() {
@@ -29,17 +32,17 @@ async function initLanding() {
     document.body.classList.remove("loading");
   }
 
-  // 1. Rellenar contenido dinÃ¡mico
+  // 1. Rellenar contenido dinámico
   if (elements.title) {
     elements.title.textContent =
       currentConfig.webinar_titulo ||
-      "Webinar sobre automatizaciÃ³n con WhatsApp";
+      "Webinar sobre automatización con WhatsApp";
   }
 
   if (elements.description) {
     elements.description.textContent =
       currentConfig.webinar_descripcion ||
-      "Descubre cÃ³mo aprovechar WhatsApp para mejorar tus resultados.";
+      "Descubre cómo aprovechar WhatsApp para mejorar tus resultados.";
   }
 
   if (elements.date) {
@@ -60,7 +63,7 @@ async function initLanding() {
   // 2. Configurar eventos del modal
   setupModalEvents();
 
-  // 3. Configurar envÃ­o del formulario
+  // 3. Configurar envío del formulario
   setupFormSubmit();
 }
 
@@ -70,7 +73,8 @@ async function initLanding() {
 function setupModalEvents() {
   if (!elements.modal || !elements.ctaButton || !elements.closeModal) return;
 
-  elements.ctaButton.onclick = () => {
+  elements.ctaButton.onclick = (e) => {
+    e.preventDefault(); // Evitar salto de página si es un enlace
     elements.modal.style.display = "block";
   };
 
@@ -86,94 +90,95 @@ function setupModalEvents() {
 }
 
 /**
- * Configura el envÃ­o del formulario:
- * - Valida campos bÃ¡sicos
- * - (Fase actual) abre WhatsApp con un mensaje preconstruido
- * - (Fase futura) enviarÃ¡ los datos a n8n / GoHighLevel / MySQL
+ * Configura el envío del formulario:
+ * - Valida campos básicos
+ * - Envía los datos al webhook de n8n (POST JSON)
+ * - Muestra feedback al usuario sin salir de la página
  */
 function setupFormSubmit() {
   if (!elements.form) return;
 
-  elements.form.onsubmit = (event) => {
+  elements.form.onsubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(elements.form);
-    const name = (formData.get("name") || "").toString().trim();
-    const email = (formData.get("email") || "").toString().trim();
-    const phone = (formData.get("phone") || "").toString().trim();
-    const channel = (formData.get("channel") || "").toString().trim();
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const phone = formData.get("phone");
+    const channel = formData.get("channel"); // "whatsapp"
 
+    // --- Validación básica ---
     if (!name || !email || !phone) {
-      alert("Por favor, rellena nombre, email y telÃ©fono.");
+      alert("Por favor, rellena todos los campos obligatorios.");
       return;
     }
 
-    if (channel !== "whatsapp") {
-      alert("Por ahora solo estÃ¡ disponible el canal WhatsApp.");
+    // Validación simple de teléfono (mínimo 8 dígitos)
+    const phoneClean = phone.replace(/\D/g, ""); // Quitar no-dígitos
+    if (phoneClean.length < 8) {
+      alert("Por favor, introduce un número de teléfono válido (mínimo 8 dígitos).");
       return;
     }
 
-    console.log("[form] Datos del formulario:", {
-      name,
-      email,
-      phone,
-      channel
-    });
-    console.log("[form] Config actual:", currentConfig);
+    // --- Construcción del Payload ---
+    const payload = {
+      name: name,
+      email: email,
+      phone: phone,
+      contactPreference: channel || "whatsapp",
+      webinar: {
+        title: currentConfig.webinar_titulo || "Webinar Default",
+        date: currentConfig.webinar_fecha || "",
+        time: currentConfig.webinar_hora || ""
+      },
+      // Metadatos adicionales
+      registrationDate: new Date().toISOString(),
+      source: "landing-page"
+    };
 
-    // Construir mensaje de bienvenida usando la plantilla de configuraciÃ³n
-    let template =
-      currentConfig.whatsapp_mensaje_bienvenida ||
-      "Hola {{nombre}}, te has apuntado al webinar \"{{webinar_titulo}}\" que se celebrarÃ¡ el {{webinar_fecha}} a las {{webinar_hora}}.";
+    console.log("Enviando datos a n8n:", payload);
 
-    const finalMessage = template
-      .replace(/{{nombre}}/g, name)
-      .replace(/{{webinar_titulo}}/g, currentConfig.webinar_titulo || "")
-      .replace(/{{webinar_fecha}}/g, currentConfig.webinar_fecha || "")
-      .replace(/{{webinar_hora}}/g, currentConfig.webinar_hora || "");
+    // --- Envío a n8n ---
+    const submitButton = elements.form.querySelector("button[type='submit']");
+    const originalButtonText = submitButton.textContent;
+    
+    try {
+      // Estado de carga visual
+      submitButton.disabled = true;
+      submitButton.textContent = "Enviando...";
 
-    // ðŸ“Œ FASE ACTUAL (SIN N8N):
-    //   - Abrir WhatsApp del alumno para que te envÃ­e el mensaje a TI.
-    // âš ï¸ IMPORTANTE: Poner tu nÃºmero de empresa aquÃ­ en formato internacional sin "+"
-    const MY_PHONE_NUMBER = "34600000000"; // TODO: sustituir por tu nÃºmero real
-    const whatsappUrl = `https://wa.me/${MY_PHONE_NUMBER}?text=${encodeURIComponent(
-      finalMessage
-    )}`;
+      const response = await fetch(N8N_WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
 
-    window.open(whatsappUrl, "_blank");
+      if (!response.ok) {
+        throw new Error(`Error en el webhook: ${response.status} ${response.statusText}`);
+      }
 
-    // Opcional: Cerrar modal y mostrar mensaje
-    elements.modal.style.display = "none";
-    alert(
-      "Â¡Gracias por registrarte! Se ha abierto WhatsApp para que confirmes tu asistencia."
-    );
+      // Éxito
+      console.log("Registro exitoso en n8n");
+      
+      // Feedback al usuario
+      alert("¡Gracias por registrarte! En breve recibirás un mensaje por WhatsApp con la información del webinar.");
+      
+      // Cerrar modal y limpiar formulario
+      elements.modal.style.display = "none";
+      elements.form.reset();
 
-    // ðŸ§© FASE FUTURA â€“ INTEGRACIÃ“N CON N8N (WEBHOOK) / GHL / MySQL
-    //
-    // TODO: cuando tengas n8n Plus,
-    // sustituir o complementar la lÃ³gica anterior por algo asÃ­:
-    //
-    // const N8N_WEBHOOK_URL = "https://tu-instancia.n8n.cloud/webhook/registro-webinar";
-    // fetch(N8N_WEBHOOK_URL, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     name,
-    //     email,
-    //     phone,
-    //     channel,
-    //     config: currentConfig
-    //   })
-    // })
-    // .then(res => res.json())
-    // .then(data => {
-    //   console.log("[n8n] Respuesta:", data);
-    // })
-    // .catch(err => {
-    //   console.error("[n8n] Error enviando datos:", err);
-    // });
+    } catch (error) {
+      console.error("Error al enviar los datos al webhook de n8n:", error);
+      alert("Ha ocurrido un problema al registrar tu asistencia. Por favor, inténtalo de nuevo en unos minutos.");
+    } finally {
+      // Restaurar botón
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
   };
 }
 
-// Iniciar cuando el DOM estÃ© listo
+// Iniciar cuando el DOM esté listo
 document.addEventListener("DOMContentLoaded", initLanding);
