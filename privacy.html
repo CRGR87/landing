@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro al Webinar</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="privacy.html">Privacidad y Condiciones</a>
+        <a href="data-deletion.html">Eliminación de Datos</a>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1 id="webinar-title">Cargando título del webinar…</h1>
+            <p id="webinar-description">
+                Estamos preparando la información del próximo webinar, por favor espera un momento.
+            </p>
+
+            <p class="hero-meta">
+                <span id="webinar-date">Fecha por definir</span> ·
+                <span id="webinar-time">Hora por definir</span>
+            </p>
+
+            <button id="cta-button" class="btn-primary">
+                Reservar mi plaza
+            </button>
+        </section>
+    </main>
+
+    <!-- Modal de registro -->
+    <div id="webinarModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+
+            <h2>Completa tu registro</h2>
+            <p>
+                Déjanos tus datos y te enviaremos toda la información del webinar por WhatsApp.
+            </p>
+
+            <form id="webinarForm">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input id="name" name="name" type="text" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono (con prefijo, ej. 34646309165)</label>
+                    <input id="phone" name="phone" type="tel" required>
+                </div>
+
+                <div class="form-group">
+                    <span>Canal de preferencia:</span><br>
+                    <!-- Email quedará deshabilitado de momento -->
+                    <label class="inline-label">
+                        <input type="radio" name="channel" value="email" disabled>
+                        Email (no disponible)
+                    </label>
+                    <label class="inline-label">
+                        <input type="radio" name="channel" value="whatsapp" checked>
+                        WhatsApp
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Enviar y continuar a WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Solo cargamos main.js; config.js se importa desde él -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

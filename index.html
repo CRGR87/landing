@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="privacy.html">Privacidad y Condiciones</a>
+        <a href="data-deletion.html">Eliminación de Datos</a>
+    </nav>
+
+    <h1 id="webinar-title">Cargando título...</h1>
+    <p id="webinar-description" class="loading">Cargando descripción del webinar...</p>
+    
+    <div class="webinar-info">
+        <p><strong>Fecha:</strong> <span id="webinar-date">...</span></p>
+        <p><strong>Hora:</strong> <span id="webinar-time">...</span></p>
+    </div>
+
+    <p>Navega a través de los enlaces superiores para consultar nuestra información legal.</p>
+
+    <div style="margin-top: 30px;">
+        <a href="#" id="cta-button" class="cta-box">Cargando...</a>
+    </div>
+
+    <!-- Modal -->
+    <div id="webinarModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Inscríbete al Webinar</h2>
+            <form id="webinarForm">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="phone">Teléfono (con prefijo):</label>
+                <input type="tel" id="phone" name="phone" placeholder="Ej: 34600000000" required>
+                
+                <!-- Campo oculto o visible para el canal, por defecto whatsapp -->
+                <div style="margin-bottom: 15px;">
+                    <label>Canal de preferencia:</label><br>
+                    <input type="radio" id="channel_whatsapp" name="channel" value="whatsapp" checked>
+                    <label for="channel_whatsapp" style="font-weight: normal;">WhatsApp</label>
+                </div>
+
+                <button type="submit">Enviar y Continuar a WhatsApp</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
