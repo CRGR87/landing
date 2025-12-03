@@ -1,141 +1,306 @@
+:root {
+    --primary-color: #25D366;
+    --primary-hover: #128C7E;
+    --text-color: #1f2937;
+    --text-light: #6b7280;
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --card-bg: #ffffff;
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
 body { 
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
     line-height: 1.6; 
-    max-width: 800px; 
-    margin: 0 auto; 
-    padding: 20px; 
-    background-color: #f5f5f5;
+    margin: 0; 
+    padding: 0; 
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
 }
 
 nav { 
-    margin-bottom: 20px; 
+    padding: 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 nav a { 
-    margin-right: 15px; 
+    margin: 0 10px; 
     text-decoration: none; 
-    color: #007bff; 
+    color: #4b5563; 
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: color 0.2s;
 }
 
 nav a:hover { 
-    text-decoration: underline; 
+    color: var(--primary-hover);
 }
 
-/* Estilos para el botón CTA (Call to Action) */
-.cta-box {
-    display: inline-block;
-    background-color: #25D366; /* WhatsApp green */
-    color: white;
-    padding: 15px 25px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-top: 20px;
+.container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.hero-card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    max-width: 600px;
+    width: 100%;
     text-align: center;
-    cursor: pointer;
-    border: none;
-    font-size: 1rem;
+    animation: slideUp 0.6s ease-out;
+}
+
+.badge {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 15px 0;
+    line-height: 1.2;
+    background: linear-gradient(to right, #111827, #4b5563);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#webinar-description {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+}
+
+/* Webinar Info Box */
+.webinar-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    border: 1px solid #e5e7eb;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.info-item i {
+    font-size: 1.5rem;
+    color: var(--primary-hover);
+}
+
+.info-item small {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.info-item span {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.info-divider {
+    width: 1px;
+    height: 40px;
+    background: #e5e7eb;
+    margin: 0 30px;
+}
+
+/* CTA Button */
+.cta-container {
+    margin-top: 30px;
+}
+
+.cta-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 18px 32px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
 }
 
 .cta-box:hover {
-    background-color: #128C7E;
-    text-decoration: none;
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
 }
 
-/* Estilos para la información del webinar */
-.webinar-info {
-    background: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    margin: 20px 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.webinar-info p {
-    margin: 5px 0;
+.legal-note {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: #9ca3af;
 }
 
 /* Modal styles */
 .modal {
     display: none; 
     position: fixed; 
-    z-index: 1; 
+    z-index: 100; 
     left: 0;
     top: 0;
     width: 100%; 
     height: 100%; 
     overflow: auto; 
-    background-color: rgba(0,0,0,0.4); 
+    background-color: rgba(0,0,0,0.6); 
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s;
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 10% auto; 
-    padding: 25px;
-    border: 1px solid #888;
+    background-color: #ffffff;
+    margin: 5% auto; 
+    padding: 40px;
+    border: none;
     width: 90%; 
-    max-width: 500px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    max-width: 450px;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    position: relative;
+    animation: slideUp 0.4s ease-out;
 }
 
 .close {
-    color: #aaa;
-    float: right;
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    color: #9ca3af;
     font-size: 28px;
     font-weight: bold;
+    transition: color 0.2s;
+}
+
+.close:hover {
+    color: var(--text-color);
+    text-decoration: none;
     cursor: pointer;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+.modal-content h2 {
+    margin-top: 0;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 25px;
 }
 
 /* Form styles */
 form { 
     display: flex; 
     flex-direction: column; 
-    margin-top: 15px;
 }
 
 label {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-color);
 }
 
 input[type="text"],
 input[type="email"],
 input[type="tel"] { 
-    margin-bottom: 15px; 
-    padding: 10px; 
-    border: 1px solid #ccc; 
-    border-radius: 4px; 
-    font-size: 16px;
+    padding: 12px 16px; 
+    border: 2px solid #e5e7eb; 
+    border-radius: 12px; 
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    outline: none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus {
+    border-color: var(--primary-color);
 }
 
 button[type="submit"] { 
-    padding: 12px; 
+    margin-top: 25px;
+    padding: 16px; 
     background-color: #007bff; 
     color: white; 
     border: none; 
-    border-radius: 4px; 
+    border-radius: 12px; 
     cursor: pointer; 
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background-color 0.2s;
 }
 
 button[type="submit"]:hover { 
     background-color: #0056b3; 
 }
 
-/* Utility classes */
-.loading {
-    opacity: 0.5;
-    pointer-events: none;
+/* Animations */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .hero-card {
+        padding: 25px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .webinar-info {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+    }
+    
+    .info-divider {
+        display: none;
+    }
+    
+    .info-item {
+        width: 100%;
+    }
 }
