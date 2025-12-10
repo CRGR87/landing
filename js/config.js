@@ -4,10 +4,8 @@
  */
 
 // URL pública del CSV de Google Sheets.
-// TODO: Reemplaza esta URL con la de tu hoja de cálculo publicada como CSV.
-// Formato esperado de columnas: clave,valor
-const CONFIG_SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR_PLACEHOLDER_URL/pub?output=csv";
+// Transformamos la URL de edición a la de exportación CSV
+const CONFIG_SHEET_URL = "https://docs.google.com/spreadsheets/d/1Q52t4A__-X8d4q6Hd5LisjKpFD4SkxiilVhkU_pzWnc/export?format=csv&gid=0";
 
 // Configuración por defecto (fallback) por si falla la carga o no hay URL
 const DEFAULT_CONFIG = {

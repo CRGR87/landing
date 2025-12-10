@@ -170,6 +170,47 @@ h1 {
     color: #9ca3af;
 }
 
+/* Video Preview Section */
+.video-preview {
+    margin: 30px 0;
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+}
+
+.video-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0 0 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.video-title i {
+    color: var(--primary-hover);
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.video-container video,
+.video-container iframe {
+    width: 100%;
+    height: auto;
+    min-height: 315px;
+    display: block;
+    border: none;
+}
+
 /* Modal styles */
 .modal {
     display: none; 
