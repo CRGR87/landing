@@ -1,83 +1,109 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro al Webinar</title>
+    <title>Privacidad y Condiciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .legal-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .legal-container h2 {
+            color: #1f2937;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #25D366;
+            padding-bottom: 10px;
+        }
+        .legal-container p {
+            color: #6b7280;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .legal-container ul {
+            color: #6b7280;
+            line-height: 1.8;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        .legal-container li {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <nav>
         <a href="index.html">Inicio</a>
+        <a href="preview.html">Avance Exclusivo</a>
         <a href="privacy.html">Privacidad y Condiciones</a>
         <a href="data-deletion.html">Eliminación de Datos</a>
     </nav>
 
-    <main>
-        <section class="hero">
-            <h1 id="webinar-title">Cargando título del webinar…</h1>
-            <p id="webinar-description">
-                Estamos preparando la información del próximo webinar, por favor espera un momento.
-            </p>
+    <main class="legal-container">
+        <h1><i class="fa-solid fa-shield"></i> Privacidad y Condiciones</h1>
 
-            <p class="hero-meta">
-                <span id="webinar-date">Fecha por definir</span> ·
-                <span id="webinar-time">Hora por definir</span>
-            </p>
+        <h2>Política de Privacidad</h2>
+        <p>En nuestro webinar, nos comprometemos a proteger tu privacidad y tus datos personales. Esta política describe cómo recopilamos, usamos y protegemos tu información.</p>
 
-            <button id="cta-button" class="btn-primary">
-                Reservar mi plaza
-            </button>
-        </section>
+        <h3>Recopilación de Datos</h3>
+        <p>Recopilamos la siguiente información cuando te registras en nuestro webinar:</p>
+        <ul>
+            <li>Nombre completo</li>
+            <li>Correo electrónico</li>
+            <li>Número de teléfono</li>
+            <li>Preferencia de canal de contacto (WhatsApp)</li>
+        </ul>
+
+        <h3>Uso de Datos</h3>
+        <p>Tu información se utiliza exclusivamente para:</p>
+        <ul>
+            <li>Registrarte en el webinar</li>
+            <li>Enviarte información sobre el evento</li>
+            <li>Contactarte por WhatsApp con detalles del webinar</li>
+            <li>Mejorar nuestros servicios y eventos</li>
+        </ul>
+
+        <h3>Protección de Datos</h3>
+        <p>Implementamos medidas de seguridad estándar para proteger tu información personal contra acceso no autorizado, alteración, divulgación o destrucción.</p>
+
+        <h2>Términos y Condiciones</h2>
+        <p>Al registrarte en este webinar, aceptas los siguientes términos y condiciones:</p>
+
+        <h3>Responsabilidad del Participante</h3>
+        <ul>
+            <li>Eres responsable de mantener la confidencialidad de tu información de acceso</li>
+            <li>Aceptas usar los materiales del webinar únicamente para propósitos educativos personales</li>
+            <li>No compartirás contenido del webinar sin permiso explícito</li>
+        </ul>
+
+        <h3>Limitación de Responsabilidad</h3>
+        <p>No seremos responsables por:</p>
+        <ul>
+            <li>Interrupciones técnicas o problemas de conexión</li>
+            <li>Daños indirectos o consecuentes derivados del uso del webinar</li>
+            <li>Pérdida de datos o información</li>
+        </ul>
+
+        <h3>Cambios en la Política</h3>
+        <p>Nos reservamos el derecho de modificar esta política de privacidad y condiciones en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación.</p>
+
+        <h2>Contacto</h2>
+        <p>Si tienes preguntas sobre esta política de privacidad o nuestras prácticas, por favor contacta con nosotros a través de los canales disponibles en la web.</p>
+
+        <hr style="margin: 40px 0; border: none; border-top: 1px solid #e5e7eb;">
+        <p style="text-align: center; color: #9ca3af; font-size: 0.9rem;">
+            Última actualización: 11 de diciembre de 2025
+        </p>
     </main>
 
-    <!-- Modal de registro -->
-    <div id="webinarModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-
-            <h2>Completa tu registro</h2>
-            <p>
-                Déjanos tus datos y te enviaremos toda la información del webinar por WhatsApp.
-            </p>
-
-            <form id="webinarForm">
-                <div class="form-group">
-                    <label for="name">Nombre</label>
-                    <input id="name" name="name" type="text" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Teléfono (con prefijo, ej. 34646309165)</label>
-                    <input id="phone" name="phone" type="tel" required>
-                </div>
-
-                <div class="form-group">
-                    <span>Canal de preferencia:</span><br>
-                    <!-- Email quedará deshabilitado de momento -->
-                    <label class="inline-label">
-                        <input type="radio" name="channel" value="email" disabled>
-                        Email (no disponible)
-                    </label>
-                    <label class="inline-label">
-                        <input type="radio" name="channel" value="whatsapp" checked>
-                        WhatsApp
-                    </label>
-                </div>
-
-                <button type="submit" class="btn-primary">
-                    Enviar y continuar a WhatsApp
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Solo cargamos main.js; config.js se importa desde él -->
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
